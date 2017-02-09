@@ -1,0 +1,125 @@
+# {
+#   articulos{
+#     id
+#     descripcion
+#     precio
+#     stock
+#   }
+# }
+
+# mutation {
+#   addCompromiso(
+#     operacion:"venta",
+#     estado:"cancelado",
+#     clienteId:2
+#   ){
+#     id
+#   }
+# }
+
+# mutation {
+#   addDetalle(
+#     cantidad:1,
+#     precio:31317,
+#     compromisoId:1,
+#     articuloId:20
+#   ){
+#     id
+#   }
+# }
+
+# mutation {
+#   addAbono(
+#     pago:52564,
+#     compromisoId:1
+#   ){
+#     id
+#   }
+# }
+
+# mutation {
+#   updArticuloCantidad(
+#     id:20,
+#     stock:55
+#   ){
+#     id
+#   }
+# }
+
+# {
+#   compromisos(id:1) {
+#     id
+#     operacion
+#     estado
+#     createdAt
+#     detalles {
+#       articulo {
+#         id
+#         descripcion
+#         stock
+#       }
+#       cantidad
+#       precio
+#     }
+#     cliente {
+#       cedula
+#       nombre
+#       telefono
+#     }
+#     abonos {
+#       pago
+#       createdAt
+#     }
+#   }
+# }
+
+# mutation {
+#   AnulaCompromiso(
+#     id: 1
+#   ){
+#     id
+#   }
+# }
+
+# mutation {
+#   addUsuario(
+#     cedula:"20400359",
+#     nombre:"Roselyn Rivas",
+#     grado:2,
+#     clave:"clave"
+#   ){
+#     id
+#   }
+# }
+
+# mutation {
+#   updUsuario(
+#     cedula:"20400359",
+#     nombre:"Roselyn Rivas",
+#     grado:1,
+#     clave:"2017"
+#   ){
+#     id
+#   }
+# }
+
+# {
+#   usuario(
+#     cedula:"20400359",
+#     clave:"2017"
+#   ){
+#     id
+#     nombre
+#     grado
+#   }
+# }
+
+# mutation {
+#   delUsuario(
+#     cedula:"20400395"
+#   ){
+#     id
+#   }
+# }
+
+

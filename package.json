@@ -1,0 +1,48 @@
+{
+  "name": "flux",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Sistema de Ventas, Pedido y Almacen Flux",
+  "author": "Ing. Rafael Briceño @rafaelbm91 <rafaelbm0291@gmail.com>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "keywords": [
+    "sistema",
+    "node",
+    "react",
+    "express",
+    "graphql",
+    "socket.io",
+    "sequelize"
+  ],
+  "devDependencies": {
+    "babel-cli": "^6.22.2",
+    "react-scripts": "0.8.5"
+  },
+  "dependencies": {
+    "bulma": "^0.3.1",
+    "express": "^4.14.1",
+    "express-graphql": "^0.6.3",
+    "faker": "^3.1.0",
+    "fixed-data-table": "^0.6.3",
+    "flexboxgrid": "^6.3.1",
+    "font-awesome": "^4.7.0",
+    "graphql": "^0.9.1",
+    "graphql-date": "^1.0.3",
+    "mysql": "^2.13.0",
+    "numeral": "^2.0.4",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "sequelize": "^3.30.2",
+    "socket.io": "^1.7.2",
+    "socket.io-client": "^1.7.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "compile": "babel lib -d dist",
+    "server": "node dist/index.js"
+  }
+}

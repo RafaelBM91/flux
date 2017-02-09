@@ -1,0 +1,51 @@
+export default () => [
+  {
+    id: 1,
+    activo: 'is-active',
+    text: 'Ventas',
+    icon: 'cart-plus',
+    grado: 2,
+  },
+  {
+    id: 2,
+    activo: '',
+    text: 'Ventas del Dia',
+    icon: 'calendar-check-o',
+    grado: 2,
+  },
+  {
+    id: 3,
+    activo: '',
+    text: 'Pedidos',
+    icon: 'flag',
+    grado: 2,
+  },
+  {
+    id: 4,
+    activo: '',
+    text: 'Pedidos Pendientes',
+    icon: 'flag-checkered',
+    grado: 2,
+  },
+  {
+    id: 5,
+    activo: '',
+    text: 'Pedidos del Mes',
+    icon: 'calendar',
+    grado: 2,
+  },
+  {
+    id: 6,
+    activo: '',
+    text: 'Almacen',
+    icon: 'cubes',
+    grado: 1,
+  },
+  {
+    id: 7,
+    activo: '',
+    text: 'Usuarios',
+    icon: 'user-circle-o',
+    grado: 1,
+  },
+];
