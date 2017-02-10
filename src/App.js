@@ -32,6 +32,9 @@ class App extends Component {
     this._handleCancelar = this._handleCancelar.bind(this);
 
     this._handleFechaBusqueda = this._handleFechaBusqueda.bind(this);
+
+    this._handleAddArticulo = this._handleAddArticulo.bind(this);
+    this._handleSubArticulo = this._handleSubArticulo.bind(this);
   }
 
   /*** COMPONENTES ***/
@@ -61,7 +64,11 @@ class App extends Component {
   /*** NAVBAR ***/
   _handleNavbar(form) {
     let { btnNavBar } = this.state;
-    this.setState({ btnNavBar, form, selectArticulos: [] });
+    this.setState({
+      btnNavBar,
+      form,
+      selectArticulos: { articulos: [], select: [], index: [], },
+    });
     this.cargaListaArticulos();
   }
 
@@ -91,28 +98,33 @@ class App extends Component {
       }}`);
   }
 
-  /*
-
-    falta anexar objetos de articulos a selectArticulos,
-    determinar que la cantidad de articulos seleccionado
-    no sobrepase la cantidad en stock y anexar selectArticulos
-    a la TablaLista
-
-  */
-
-
   /*** SELECCION DE ARTICULOS ***/
-  _handleAddArticulo(index) {
+  _handleAddArticulo(e) {
     let { articulos, selectArticulos } = this.state;
-    selectArticulos.push({...articulos[index]});
-    selectArticulos[index].select++;
+    let index = parseInt(e.target.value,10);
+    let find = selectArticulos.index.indexOf(index);
+
+    if (find > -1) {
+      selectArticulos.select[find]++;
+    } else {
+      selectArticulos.articulos.push(articulos[index]);
+      selectArticulos.select.push(1);
+      selectArticulos.index.push(index);
+    }
     this.setState({ selectArticulos });
   }
-  _handleSubArticulo(index) {
-    let { articulos, selectArticulos } = this.state;
-    articulos[index].select--;
-    selectArticulos[index].select--;
-    this.setState({ articulos, selectArticulos });
+  _handleSubArticulo(e) {
+    let { selectArticulos } = this.state;
+    let index = parseInt(e.target.value,10);
+    let find = selectArticulos.index.indexOf(index);
+    if (selectArticulos.select[find] < 2) {
+      selectArticulos.articulos.splice(find,1);
+      selectArticulos.select.splice(find,1);
+      selectArticulos.index.splice(find,1);
+    } else {
+      selectArticulos.select[find]--;
+    }
+    this.setState({ selectArticulos });    
   }
 
   /*** CARGAR LISTA ACTUALIZADA DE ARTICULOS ***/
@@ -234,6 +246,7 @@ class App extends Component {
                 <div className="col-xs-6 work-left">
                   
                   <Form
+                    usuario={this.state.usuario}
                     form={this.state.form}
                     cliente={this.state.cliente}
                     buscarArticulo={this.state.buscarArticulo}
@@ -250,7 +263,6 @@ class App extends Component {
                 <div className="col-xs-6 work-right">
 
                   <TablaArticulos
-                    _self={this}
                     usuario={this.state.usuario}
                     articulos={this.state.articulos}
                     selectArticulos={this.state.selectArticulos}
@@ -262,7 +274,10 @@ class App extends Component {
               </div>
             </div>
             <div className="col-xs-12 table-bottom" style={{paddingTop:'5px',paddingLeft:'20px'}}>
-              
+              <TablaLista
+                usuario={this.state.usuario}
+                selectArticulos={this.state.selectArticulos}
+                form={this.state.form} />
             </div>
           </div>
         </section>
@@ -323,8 +338,5 @@ class App extends Component {
 export default App;
 
 /*
-<TablaLista
-                usuario={this.state.usuario}
-                articulos={this.state.articulos}
-                form={this.state.form} />
+
 */

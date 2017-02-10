@@ -20,7 +20,6 @@ class TablaArticulos extends Component {
           <Tabla1
             articulos={this.props.articulos}
             selectArticulos={this.props.selectArticulos}
-            _self={this.props._self}
             _handleAddArticulo={this.props._handleAddArticulo}
             _handleSubArticulo={this.props._handleSubArticulo} />
         :
@@ -36,8 +35,13 @@ class Tabla1 extends Component {
     super(props);
     this.state = {};
   }
+  ImprimeSelect(index) {
+    let { selectArticulos } = this.props;
+    let find = selectArticulos.index.indexOf(index);
+    return (find !== -1) ? selectArticulos.select[find] : 0;
+  }
   render() {
-    const { articulos, selectArticulos } = this.props;
+    const { articulos } = this.props;
     return (
       <Table
         rowHeight={30}
@@ -77,18 +81,22 @@ class Tabla1 extends Component {
             <Cell {...props}>
               <button
                 type="button"
-                disabled={(articulos[rowIndex].select === articulos[rowIndex].stock)}
-                onClick={this.props._handleAddArticulo.bind(this.props._self,rowIndex)} >
-                <i className="fa fa-arrow-up" aria-hidden="true"></i>
+                className="fa fa-arrow-up"
+                disabled={!(this.ImprimeSelect(rowIndex) < articulos[rowIndex].stock)}
+                value={rowIndex}
+                onClick={this.props._handleAddArticulo} >
               </button>
               <span style={{marginLeft:'5px',marginRight:'5px'}}>
-                {selectArticulos[rowIndex].select}
+              {
+                this.ImprimeSelect(rowIndex).toString()
+              }
               </span>
               <button
                 type="button"
-                disabled={(articulos[rowIndex].select === 0)}
-                onClick={this.props._handleSubArticulo.bind(this.props._self,rowIndex)} >
-                <i className="fa fa-arrow-down" aria-hidden="true"></i>
+                className="fa fa-arrow-down"
+                disabled={!(this.ImprimeSelect(rowIndex) > 0)}
+                value={rowIndex}
+                onClick={this.props._handleSubArticulo} >
               </button>
             </Cell>
           )}

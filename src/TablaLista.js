@@ -16,7 +16,7 @@ class TablaArticulos extends Component {
           this.props.form === 3
         )
         ?
-          <Tabla1 articulos={this.props.articulos} />
+          <Tabla1 selectArticulos={this.props.selectArticulos} />
         :
           <div></div>
       :
@@ -28,23 +28,14 @@ class TablaArticulos extends Component {
 class Tabla1 extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      articulos: [],
-    };
-  }
-  componentWillReceiveProps() {
-    let { articulos } = this.props;
-    articulos = articulos.filter(elemento => {
-      return (elemento.select > 0) ? elemento : null;
-    });  
-    this.setState({ articulos });
+    this.state = {};
   }
   render() {
-    let { articulos } = this.state;
+    let { selectArticulos } = this.props;
     return (
       <Table
         rowHeight={30}
-        rowsCount={articulos.length}
+        rowsCount={selectArticulos.articulos.length}
         width={1344}
         height={340}
         headerHeight={30} >
@@ -52,7 +43,7 @@ class Tabla1 extends Component {
           header={<Cell>Descripcion</Cell>}
           cell={({rowIndex, ...props}) => (
             <Cell {...props}>
-              {articulos[rowIndex].descripcion}
+              {selectArticulos.articulos[rowIndex].descripcion}
             </Cell>
           )}
           width={250} />
@@ -60,7 +51,7 @@ class Tabla1 extends Component {
           header={<Cell>Cantidad</Cell>}
           cell={({rowIndex, ...props}) => (
             <Cell {...props}>
-              {articulos[rowIndex].select}
+              {selectArticulos.select[rowIndex]}
             </Cell>
           )}
           width={100} />
@@ -69,7 +60,7 @@ class Tabla1 extends Component {
           cell={({rowIndex, ...props}) => (
             <Cell {...props}>
               {
-                numeral(articulos[rowIndex].precio).format('0,0.00')
+                numeral(selectArticulos.articulos[rowIndex].precio).format('0,0.00')
               } Bs
             </Cell>
           )}
@@ -79,7 +70,11 @@ class Tabla1 extends Component {
           cell={({rowIndex, ...props}) => (
             <Cell {...props}>
               {
-                numeral(articulos[rowIndex].precio * articulos[rowIndex].select).format('0,0.00')
+                numeral(
+                  selectArticulos.articulos[rowIndex].precio
+                  *
+                  selectArticulos.select[rowIndex]
+                ).format('0,0.00')
               } Bs
             </Cell>
           )}

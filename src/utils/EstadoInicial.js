@@ -10,7 +10,7 @@ export default (
     usuario,
     usuarioIngreso: { cedula: '19529584', clave: '2017' },
     articulos: [],
-    selectArticulos: [],
+    selectArticulos: { articulos: [], select: [], index: [], },
     buscarArticulo: '',
     fechaBusqueda: '',
     cliente: { id: 0, cedula: '', nombre: '', telefono: '' },
