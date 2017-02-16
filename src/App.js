@@ -18,16 +18,16 @@ class App extends Component {
     super(props);
     this.state = EstadoInicial();
 
-    this._handleCedulaUsuario = this._handleCedulaUsuario.bind(this);
-    this._handleClaveUsuario = this._handleClaveUsuario.bind(this);
+    /*** FORMULARIO INICIO DE SESSION */
+    this._handleFormSession = this._handleFormSession.bind(this);
     this._handleIngreso = this._handleIngreso.bind(this);
 
     this._handleBuscarArticulo = this._handleBuscarArticulo.bind(this);
 
-    this._handleCedulaCliente = this._handleCedulaCliente.bind(this);
+    /*** FORMULARIO CLIENTE VENTA - PEDIDO ***/
+    this._handleFormCliente = this._handleFormCliente.bind(this);
     this._handleCedulaClienteKey = this._handleCedulaClienteKey.bind(this);
-    this._handleNombreCliente = this._handleNombreCliente.bind(this);
-    this._handleTelefonoCliente = this._handleTelefonoCliente.bind(this);
+
 
     this._handleCancelar = this._handleCancelar.bind(this);
 
@@ -35,6 +35,10 @@ class App extends Component {
 
     this._handleAddArticulo = this._handleAddArticulo.bind(this);
     this._handleSubArticulo = this._handleSubArticulo.bind(this);
+
+    this._handleFormArticulo = this._handleFormArticulo.bind(this);
+    this._handleSelectArticulo = this._handleSelectArticulo.bind(this);
+    
   }
 
   /*** COMPONENTES ***/
@@ -68,19 +72,17 @@ class App extends Component {
       btnNavBar,
       form,
       selectArticulos: { articulos: [], select: [], index: [], },
+      cliente: { id: 0, cedula: '', nombre: '', telefono: '' },
+      articulo: { id: 0, descripcion: '', precio: 0.00, stock: 0 },
     });
     this.cargaListaArticulos();
   }
 
   /*** INICIO DE SESION ***/
-  _handleCedulaUsuario(e) {
+  _handleFormSession(e) {
     let { usuarioIngreso } = this.state;
-    usuarioIngreso.cedula = e.target.value;
-    this.setState({ usuarioIngreso });
-  }
-  _handleClaveUsuario(e) {
-    let { usuarioIngreso } = this.state;
-    usuarioIngreso.clave = e.target.value;
+    let tag = e.target.dataset.tag;
+    usuarioIngreso[tag] = e.target.value;
     this.setState({ usuarioIngreso });
   }
   _handleIngreso() {
@@ -150,11 +152,6 @@ class App extends Component {
   }
 
   /*** FORMULARIO DE CLIENTE ***/
-  _handleCedulaCliente(e) {
-    let { cliente } = this.state;
-    cliente.cedula = e.target.value;
-    this.setState({ cliente });
-  }
   _handleCedulaClienteKey(e) {
     if (e.key === 'Enter') {
       io.emit('graphq:cliente',`
@@ -169,15 +166,24 @@ class App extends Component {
               }}`);
     }
   }
-  _handleNombreCliente(e) {
+  _handleFormCliente(e) {
     let { cliente } = this.state;
-    cliente.nombre = e.target.value;
+    let tag = e.target.dataset.tag;
+    cliente[tag] = e.target.value;
     this.setState({ cliente });
   }
-  _handleTelefonoCliente(e) {
-    let { cliente } = this.state;
-    cliente.telefono = e.target.value;
-    this.setState({ cliente });
+
+  /*** FORMULARIO DE ARTICULO ***/
+  _handleFormArticulo(e) {
+    let { articulo } = this.state;
+    let tag = e.target.dataset.tag;
+    articulo[tag] = e.target.value;
+    this.setState({ articulo });
+  }
+  _handleSelectArticulo(e) {
+    let { articulo } = this.state;
+    articulo = JSON.parse(e.target.value);
+    this.setState({ articulo });
   }
 
   /*** FECHA DE BUSQUEDA ***/
@@ -249,14 +255,19 @@ class App extends Component {
                     usuario={this.state.usuario}
                     form={this.state.form}
                     cliente={this.state.cliente}
+                    articulo={this.state.articulo}
                     buscarArticulo={this.state.buscarArticulo}
                     fechaBusqueda={this.state.fechaBusqueda}
+                    
                     _handleFechaBusqueda={this._handleFechaBusqueda}
-                    _handleCedulaCliente={this._handleCedulaCliente}
+                    
                     _handleCedulaClienteKey={this._handleCedulaClienteKey}
-                    _handleNombreCliente={this._handleNombreCliente}
-                    _handleTelefonoCliente={this._handleTelefonoCliente}
+                    _handleFormCliente={this._handleFormCliente}
+
                     _handleBuscarArticulo={this._handleBuscarArticulo}
+
+                    _handleFormArticulo={this._handleFormArticulo}
+
                     _handleCancelar={this._handleCancelar}/>
 
                 </div>
@@ -268,6 +279,9 @@ class App extends Component {
                     selectArticulos={this.state.selectArticulos}
                     _handleAddArticulo={this._handleAddArticulo}
                     _handleSubArticulo={this._handleSubArticulo}
+
+                    _handleSelectArticulo={this._handleSelectArticulo}
+
                     form={this.state.form} />
 
                 </div>
@@ -293,18 +307,20 @@ class App extends Component {
                     <input
                       className="input"
                       type="text"
+                      data-tag="cedula"
                       placeholder="Cedula"
                       value={this.state.usuarioIngreso.cedula}
                       autoFocus={true}
-                      onChange={this._handleCedulaUsuario} />
+                      onChange={this._handleFormSession} />
                   </div>
                   <div className="col-xs-12">
                     <input
                       className="input"
                       type="password"
+                      data-tag="clave"
                       placeholder="Contraseña"
                       value={this.state.usuarioIngreso.clave}
-                      onChange={this._handleClaveUsuario}/>
+                      onChange={this._handleFormSession}/>
                   </div>
                   <div className="col-xs-12">
                     <input

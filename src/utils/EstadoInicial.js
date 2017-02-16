@@ -2,7 +2,8 @@ import NavBtn from './NavBtn';
 
 export default (
   form = 1,
-  usuario = { id: 0, cedula: '', nombre: '', grado: 3, clave: '', },
+  usuario = { id: 0, cedula: '', nombre: '', grado: 0, clave: '', },
+  cliente = { id: 0, cedula: '', nombre: '', telefono: '' },
 ) => {
   return {
     btnNavBar: NavBtn(),
@@ -13,6 +14,7 @@ export default (
     selectArticulos: { articulos: [], select: [], index: [], },
     buscarArticulo: '',
     fechaBusqueda: '',
-    cliente: { id: 0, cedula: '', nombre: '', telefono: '' },
+    cliente,
+    articulo: { id: 0, descripcion: '', precio: 0.00, stock: 0 },
   }
 }
